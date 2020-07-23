@@ -25,7 +25,7 @@
 
                             <div class="col-md-5 center-item">
                                 <div class="input-group number-spinner">
-                                    <button id="test" class="btn btn-default"><i id="phoneMinus" class="fas fa-minus"></i></button>
+                                    <button id="minBtn1" class="btn btn-default"><i id="phoneMinus" class="fas fa-minus"></i></button>
                                     <input id="mobileNum" type="text" class="form-control text-center" value="1">
                                     <button class="btn btn-default"><i id="phonePlus" class="fas fa-plus"></i></button>
                                 </div>
@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-md-5 center-item">
                                 <div class="input-group number-spinner">
-                                    <button class="btn btn-default"><i id="caseMinus" class="fas fa-minus"></i></button>
+                                    <button id="minBtn2" class="btn btn-default"><i id="caseMinus" class="fas fa-minus"></i></button>
                                     <input id="caseNum" type="text" class="form-control text-center" value="1">
                                     <button class="btn btn-default"><i id="casePlus" class="fas fa-plus"></i></button>
 
@@ -65,7 +65,7 @@
 
                             <div class="col-md-4 status">
                                 <h5>$ <span id="subtotal">1278</span></h5>
-                                <h5>$ <span id="tax">153</span></h5>
+                                <h5>(+ 12%)$ <span id="tax">153</span></h5>
                                 <h5>$ <span id="total">1431</span></h5>
                             </div>
                         </div>
@@ -83,14 +83,14 @@
         plus_minus("phonePlus", "phoneMinus", "mobileNum", "mobile_price")
         plus_minus("casePlus", "caseMinus", "caseNum", "casePrice")
 
-        let upperCross = document.getElementById("upperCross")
-        upperCross.addEventListener('click', function() {
+        let upperCrossBtn = document.getElementById("upperCross")
+        upperCrossBtn.addEventListener('click', function() {
             document.getElementById("mobile_price").innerText = 00
             total_transaction()
             document.getElementById("upperElement").style.display = "none"
         })
-        let lowerCross = document.getElementById("lowerCross")
-        lowerCross.addEventListener("click", function() {
+        let lowerCrossBtn = document.getElementById("lowerCross")
+        lowerCrossBtn.addEventListener("click", function() {
             document.getElementById("casePrice").innerText = 00
             total_transaction()
             document.getElementById("lowerElement").style.display = "none"
@@ -101,8 +101,10 @@
             let phonePlus = document.getElementById(plusElement)
             phonePlus.addEventListener('click', function() {
                 let updateProduct = plus(id) //with id
-                if (updateProduct > 0) {
-                    document.getElementById("test").disabled = false;
+                if (updateProduct > 0 && plusElement == "phonePlus") {
+                    document.getElementById("minBtn1").disabled = false;
+                } else if (updateProduct > 0 && plusElement != "phonePlus") {
+                    document.getElementById("minBtn2").disabled = false;
                 }
                 let devicePrice;
                 if (plusElement == "phonePlus") {
@@ -114,13 +116,13 @@
                 document.getElementById(mobPrice).innerText = current_mobile_price
                 total_transaction()
             })
-            let phoneMinus = document.getElementById(minusElement)
+            let phoneMinus = document.getElementById(minusElement) //document.getElementById("test").setAttribute('disabled', '')
             phoneMinus.addEventListener('click', function() {
                 let updateProduct = minus(id)
-                console.log(updateProduct);
-                if (updateProduct === 0) {
-                    //document.getElementById("test").disabled = true;
-                    document.getElementById("test").setAttribute('disabled', '')
+                if (updateProduct == 0 && plusElement == "phonePlus") {
+                    document.getElementById("minBtn1").disabled = true;
+                } else if (updateProduct == 0 && plusElement != "phonePlus") {
+                    document.getElementById("minBtn2").disabled = true;
                 }
                 let devicePrice;
                 if (plusElement == "phonePlus") {
