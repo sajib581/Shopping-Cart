@@ -118,8 +118,9 @@
             phoneMinus.addEventListener('click', function() {
                 let updateProduct = minus(id)
                 console.log(updateProduct);
-                if (updateProduct < 1) {
-                    document.getElementById("test").disabled = true;
+                if (updateProduct === 0) {
+                    //document.getElementById("test").disabled = true;
+                    document.getElementById("test").setAttribute('disabled', '')
                 }
                 let devicePrice;
                 if (plusElement == "phonePlus") {
