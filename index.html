@@ -16,7 +16,7 @@
         <div class="container">
             <div class="cart">
                 <div class="col-md-12 col-lg-10 mx-auto">
-                    <div class="cart-item">
+                    <div id="upperElement" class="cart-item">
                         <div class="row">
                             <div class="col-md-7 center-item">
                                 <img src="images/product-1.png" alt="">
@@ -25,17 +25,17 @@
 
                             <div class="col-md-5 center-item">
                                 <div class="input-group number-spinner">
-                                    <button class="btn btn-default"><i id="phoneMinus" class="fas fa-minus"></i></button>
+                                    <button id="test" class="btn btn-default"><i id="phoneMinus" class="fas fa-minus"></i></button>
                                     <input id="mobileNum" type="text" class="form-control text-center" value="1">
                                     <button class="btn btn-default"><i id="phonePlus" class="fas fa-plus"></i></button>
                                 </div>
                                 <h5>$<span id="mobile_price">1219</span></h5>
-                                <img src="images/remove.png" alt="" class="remove-item">
+                                <img id="upperCross" src="images/remove.png" alt="" class="remove-item">
                             </div>
                         </div>
                     </div>
 
-                    <div class="cart-item">
+                    <div id="lowerElement" class="cart-item">
                         <div class="row">
                             <div class="col-md-7 center-item mx-auto">
                                 <img src="images/product-2.png" alt="">
@@ -49,7 +49,7 @@
 
                                 </div>
                                 <h5>$<span id="casePrice">59</span></h5>
-                                <img src="images/remove.png" alt="" class="remove-item">
+                                <img id="lowerCross" src="images/remove.png" alt="" class="remove-item">
                             </div>
                         </div>
                     </div>
@@ -64,9 +64,9 @@
                             </div>
 
                             <div class="col-md-4 status">
-                                <h5>$ <span id="subtotal">00</span></h5>
-                                <h5>$ <span id="tax">0</span></h5>
-                                <h5>$ <span id="total">00</span></h5>
+                                <h5>$ <span id="subtotal">1278</span></h5>
+                                <h5>$ <span id="tax">153</span></h5>
+                                <h5>$ <span id="total">1431</span></h5>
                             </div>
                         </div>
                     </div>
@@ -83,38 +83,52 @@
         plus_minus("phonePlus", "phoneMinus", "mobileNum", "mobile_price")
         plus_minus("casePlus", "caseMinus", "caseNum", "casePrice")
 
-        let subTotal, tax, total;
+        let upperCross = document.getElementById("upperCross")
+        upperCross.addEventListener('click', function() {
+            document.getElementById("mobile_price").innerText = 00
+            total_transaction()
+            document.getElementById("upperElement").style.display = "none"
+        })
+        let lowerCross = document.getElementById("lowerCross")
+        lowerCross.addEventListener("click", function() {
+            document.getElementById("casePrice").innerText = 00
+            total_transaction()
+            document.getElementById("lowerElement").style.display = "none"
+        })
+
 
         function plus_minus(plusElement, minusElement, id, mobPrice) {
             let phonePlus = document.getElementById(plusElement)
             phonePlus.addEventListener('click', function() {
                 let updateProduct = plus(id) //with id
+                if (updateProduct > 0) {
+                    document.getElementById("test").disabled = false;
+                }
                 let devicePrice;
                 if (plusElement == "phonePlus") {
                     devicePrice = 1219;
                 } else {
                     devicePrice = 59;
                 }
-
                 let current_mobile_price = updateProduct * devicePrice;
                 document.getElementById(mobPrice).innerText = current_mobile_price
-
                 total_transaction()
             })
             let phoneMinus = document.getElementById(minusElement)
             phoneMinus.addEventListener('click', function() {
                 let updateProduct = minus(id)
-                    //console.log(updateProduct); //with id
+                console.log(updateProduct);
+                if (updateProduct < 1) {
+                    document.getElementById("test").disabled = true;
+                }
                 let devicePrice;
                 if (plusElement == "phonePlus") {
                     devicePrice = 1219;
                 } else {
                     devicePrice = 59;
                 }
-
                 let current_mobile_price = updateProduct * devicePrice
                 document.getElementById(mobPrice).innerText = current_mobile_price
-
                 total_transaction()
             })
         }
@@ -136,6 +150,11 @@
             let subtotal = current_mobile_price + current_case_price
             document.getElementById('subtotal').innerText = subtotal
 
+            let tax = Math.round((subtotal * 12) / 100)
+            document.getElementById('tax').innerText = tax
+
+            let total = subtotal + tax
+            document.getElementById('total').innerText = total
         }
     </script>
 </body>
