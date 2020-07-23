@@ -101,17 +101,10 @@
             let phonePlus = document.getElementById(plusElement)
             phonePlus.addEventListener('click', function() {
                 let updateProduct = plus(id) //with id
-                if (updateProduct > 0 && plusElement == "phonePlus") {
-                    document.getElementById("minBtn1").disabled = false;
-                } else if (updateProduct > 0 && plusElement != "phonePlus") {
-                    document.getElementById("minBtn2").disabled = false;
-                }
-                let devicePrice;
-                if (plusElement == "phonePlus") {
-                    devicePrice = 1219;
-                } else {
-                    devicePrice = 59;
-                }
+
+                disabled_option(updateProduct, plusElement)
+                let devicePrice = device_price(plusElement)
+
                 let current_mobile_price = updateProduct * devicePrice;
                 document.getElementById(mobPrice).innerText = current_mobile_price
                 total_transaction()
@@ -119,21 +112,39 @@
             let phoneMinus = document.getElementById(minusElement) //document.getElementById("test").setAttribute('disabled', '')
             phoneMinus.addEventListener('click', function() {
                 let updateProduct = minus(id)
-                if (updateProduct == 0 && plusElement == "phonePlus") {
-                    document.getElementById("minBtn1").disabled = true;
-                } else if (updateProduct == 0 && plusElement != "phonePlus") {
-                    document.getElementById("minBtn2").disabled = true;
-                }
-                let devicePrice;
-                if (plusElement == "phonePlus") {
-                    devicePrice = 1219;
-                } else {
-                    devicePrice = 59;
-                }
+                disabled_system(updateProduct, plusElement)
+                let devicePrice = device_price(plusElement)
+
                 let current_mobile_price = updateProduct * devicePrice
                 document.getElementById(mobPrice).innerText = current_mobile_price
                 total_transaction()
             })
+        }
+
+        function device_price(plusElement) {
+            let devicePrice;
+            if (plusElement == "phonePlus") {
+                devicePrice = 1219;
+            } else {
+                devicePrice = 59;
+            }
+            return devicePrice;
+        }
+
+        function disabled_option(updateProduct, plusElement) {
+            if (updateProduct > 0 && plusElement == "phonePlus") {
+                document.getElementById("minBtn1").disabled = false;
+            } else if (updateProduct > 0 && plusElement != "phonePlus") {
+                document.getElementById("minBtn2").disabled = false;
+            }
+        }
+
+        function disabled_system(updateProduct, plusElement) {
+            if (updateProduct == 0 && plusElement == "phonePlus") {
+                document.getElementById("minBtn1").disabled = true;
+            } else if (updateProduct == 0 && plusElement != "phonePlus") {
+                document.getElementById("minBtn2").disabled = true;
+            }
         }
 
         function plus(id) {
