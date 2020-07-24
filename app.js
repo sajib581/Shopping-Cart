@@ -57,8 +57,12 @@ crossBtn2.addEventListener("click", function() {
 
 orderButton.addEventListener("click", function() {
     document.getElementById("transaction").style.display = "none"
-        //orderButton.style.display = "block"
-    document.getElementById("order").style.display = "block"
+    if (total.innerText != "0") {
+        document.getElementById("order").style.display = "block"
+    } else {
+        document.getElementById("cancel").style.display = "block"
+    }
+
 })
 
 //All Functions
