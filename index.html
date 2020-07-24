@@ -11,31 +11,30 @@
 </head>
 
 <body>
-
-    <section>
+    <section id="transaction">
         <div class="container">
             <div class="cart">
-                <div class="col-md-12 col-lg-10 mx-auto">
-                    <div id="upperElement" class="cart-item">
+                <div class="col-md-12 col-sm-12 col-lg-10 mx-auto">
+                    <div id="1st-view" class="cart-item">
                         <div class="row">
-                            <div class="col-md-7 center-item">
+                            <div class="col-md-7 col-sm-7 center-item">
                                 <img src="images/product-1.png" alt="">
                                 <h5>iPhone 11 128GB Black</h5>
                             </div>
 
-                            <div class="col-md-5 center-item">
+                            <div class="col-md-5 col-sm-5 center-item">
                                 <div class="input-group number-spinner">
-                                    <button id="minBtn1" class="btn btn-default"><i id="phoneMinus" class="fas fa-minus"></i></button>
-                                    <input id="mobileNum" type="text" class="form-control text-center" value="1">
-                                    <button class="btn btn-default"><i id="phonePlus" class="fas fa-plus"></i></button>
+                                    <button id="minus-btn-1" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                                    <input id="input-1" type="text" class="form-control text-center" value="1">
+                                    <button id="plus-btn-1" class="btn btn-default"><i class="fas fa-plus"></i></button>
                                 </div>
-                                <h5>$<span id="mobile_price">1219</span></h5>
-                                <img id="upperCross" src="images/remove.png" alt="" class="remove-item">
+                                <h5>$ <span id="mobile-price">1219</span></h5>
+                                <img id="cross-btn-1" src="images/remove.png" alt="" class="remove-item">
                             </div>
                         </div>
                     </div>
 
-                    <div id="lowerElement" class="cart-item">
+                    <div id="second-view" class="cart-item">
                         <div class="row">
                             <div class="col-md-7 center-item mx-auto">
                                 <img src="images/product-2.png" alt="">
@@ -43,13 +42,13 @@
                             </div>
                             <div class="col-md-5 center-item">
                                 <div class="input-group number-spinner">
-                                    <button id="minBtn2" class="btn btn-default"><i id="caseMinus" class="fas fa-minus"></i></button>
-                                    <input id="caseNum" type="text" class="form-control text-center" value="1">
-                                    <button class="btn btn-default"><i id="casePlus" class="fas fa-plus"></i></button>
+                                    <button id="minus-btn-2" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                                    <input id="inpu2-2" type="text" class="form-control text-center" value="1">
+                                    <button id="plus-btn-2" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                                 </div>
-                                <h5>$<span id="casePrice">59</span></h5>
-                                <img id="lowerCross" src="images/remove.png" alt="" class="remove-item">
+                                <h5>$ <span id="case-price">59</span></h5>
+                                <img id="cross-btn-2" src="images/remove.png" alt="" class="remove-item">
                             </div>
                         </div>
                     </div>
@@ -65,112 +64,24 @@
 
                             <div class="col-md-4 status">
                                 <h5>$ <span id="subtotal">1278</span></h5>
-                                <h5>(+ 12%)$ <span id="tax">153</span></h5>
-                                <h5>$ <span id="total">1431</span></h5>
+                                <h5>$ <span id="tax">102</span></h5>
+                                <h5>$ <span id="total">1380</span></h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 pt-4 pb-4">
-                        <button type="button" class="btn btn-success check-out">Check Out</button>
+                        <button id="orderButton" type="button" class="btn btn-success check-out">Check Out</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <script>
-        // Phone functionalities        
-        plus_minus("phonePlus", "phoneMinus", "mobileNum", "mobile_price")
-        plus_minus("casePlus", "caseMinus", "caseNum", "casePrice")
-
-        let upperCrossBtn = document.getElementById("upperCross")
-        upperCrossBtn.addEventListener('click', function() {
-            document.getElementById("mobile_price").innerText = 00
-            total_transaction()
-            document.getElementById("upperElement").style.display = "none"
-        })
-        let lowerCrossBtn = document.getElementById("lowerCross")
-        lowerCrossBtn.addEventListener("click", function() {
-            document.getElementById("casePrice").innerText = 00
-            total_transaction()
-            document.getElementById("lowerElement").style.display = "none"
-        })
-
-
-        function plus_minus(plusElement, minusElement, id, mobPrice) {
-            let phonePlus = document.getElementById(plusElement)
-            phonePlus.addEventListener('click', function() {
-                let updateProduct = plus(id) //with id
-
-                disabled_option(updateProduct, plusElement)
-                let devicePrice = device_price(plusElement)
-
-                let current_mobile_price = updateProduct * devicePrice;
-                document.getElementById(mobPrice).innerText = current_mobile_price
-                total_transaction()
-            })
-            let phoneMinus = document.getElementById(minusElement) //document.getElementById("test").setAttribute('disabled', '')
-            phoneMinus.addEventListener('click', function() {
-                let updateProduct = minus(id)
-                disabled_system(updateProduct, plusElement)
-                let devicePrice = device_price(plusElement)
-
-                let current_mobile_price = updateProduct * devicePrice
-                document.getElementById(mobPrice).innerText = current_mobile_price
-                total_transaction()
-            })
-        }
-
-        function device_price(plusElement) {
-            let devicePrice;
-            if (plusElement == "phonePlus") {
-                devicePrice = 1219;
-            } else {
-                devicePrice = 59;
-            }
-            return devicePrice;
-        }
-
-        function disabled_option(updateProduct, plusElement) {
-            if (updateProduct > 0 && plusElement == "phonePlus") {
-                document.getElementById("minBtn1").disabled = false;
-            } else if (updateProduct > 0 && plusElement != "phonePlus") {
-                document.getElementById("minBtn2").disabled = false;
-            }
-        }
-
-        function disabled_system(updateProduct, plusElement) {
-            if (updateProduct == 0 && plusElement == "phonePlus") {
-                document.getElementById("minBtn1").disabled = true;
-            } else if (updateProduct == 0 && plusElement != "phonePlus") {
-                document.getElementById("minBtn2").disabled = true;
-            }
-        }
-
-        function plus(id) {
-            document.getElementById(id).value = parseInt(document.getElementById(id).value) + 1
-            return parseInt(document.getElementById(id).value)
-        }
-
-        function minus(id) {
-            document.getElementById(id).value = parseInt(document.getElementById(id).value) - 1
-            return parseInt(document.getElementById(id).value)
-        }
-
-        function total_transaction() {
-            let current_mobile_price = parseInt(document.getElementById("mobile_price").innerText)
-            let current_case_price = parseInt(document.getElementById("casePrice").innerText)
-
-            let subtotal = current_mobile_price + current_case_price
-            document.getElementById('subtotal').innerText = subtotal
-
-            let tax = Math.round((subtotal * 12) / 100)
-            document.getElementById('tax').innerText = tax
-
-            let total = subtotal + tax
-            document.getElementById('total').innerText = total
-        }
-    </script>
+    <section id="order">
+        <div>
+            <h1 class="display-1 text-center">Your order has been Submitted</h1>
+        </div>
+    </section>
+    <script src="app.js"></script>
 </body>
 
 </html>
